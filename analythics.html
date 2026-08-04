@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analitik - GlobalKurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        :root { --bg: #0b1121; --surface: #1e293b; --primary: #3b82f6; --text: #f8fafc; --muted: #94a3b8; --up: #10b981; --down: #ef4444; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        nav { padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--text); text-decoration: none; }
+        .logo span.material-icons-outlined { color: var(--primary); font-size: 2rem; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .container { padding: 3rem 5%; flex: 1; }
+        .glass-panel { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; overflow-x: auto; }
+        h2 { margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { color: var(--muted); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        .col-flex { display: flex; align-items: center; gap: 0.8rem; }
+        .status-badge { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .bg-up { background: rgba(16, 185, 129, 0.1); color: var(--up); }
+        .bg-down { background: rgba(239, 68, 68, 0.1); color: var(--down); }
+        .text-up { color: var(--up); }
+        .text-down { color: var(--down); }
+        footer { text-align: center; padding: 2rem; color: var(--muted); margin-top: auto; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo"><span class="material-icons-outlined">currency_exchange</span> GlobalKurs</a>
+        <div class="nav-links">
+            <a href="index.html">Beranda</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="analythics.html" class="active">Analitik</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Laporan Pergerakan Detail (24 Jam)</h2>
+        <div class="glass-panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mata Uang</th>
+                        <th>Kode</th>
+                        <th>Nilai Tukar (IDR)</th>
+                        <th>Perubahan</th>
+                        <th>Status Pasar</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- JS Data -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 GlobalKurs Analytics. | <a href="terms.html" style="color:var(--primary);text-decoration:none;">Syarat</a> | <a href="privacy.html" style="color:var(--primary);text-decoration:none;">Privasi</a></p>
+    </footer>
+
+    <script>
+        const dataAnalytics = [
+            { name: "US Dollar", code: "USD", rate: 15650, change: 0.45, emoji: "🇺🇸" },
+            { name: "Euro", code: "EUR", rate: 16980, change: -0.21, emoji: "🇪🇺" },
+            { name: "Pound Sterling", code: "GBP", rate: 19850, change: 0.85, emoji: "🇬🇧" },
+            { name: "Swiss Franc", code: "CHF", rate: 18200, change: 0.15, emoji: "🇨🇭" },
+            { name: "Japanese Yen", code: "JPY", rate: 104, change: -1.15, emoji: "🇯🇵" },
+            { name: "Hong Kong Dollar", code: "HKD", rate: 2005, change: -0.05, emoji: "🇭🇰" }
+        ];
+
+        const tbody = document.getElementById('table-body');
+        
+        dataAnalytics.forEach(c => {
+            const isUp = c.change >= 0;
+            const textClass = isUp ? 'text-up' : 'text-down';
+            const bgClass = isUp ? 'bg-up' : 'bg-down';
+            const sign = isUp ? '+' : '';
+            const statusText = isUp ? 'MENGUAT 📈' : 'ANJLOK 📉';
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <div class="col-flex">
+                        <span style="font-size:1.5rem">${c.emoji}</span> 
+                        <strong>${c.name}</strong>
+                    </div>
+                </td>
+                <td>${c.code}</td>
+                <td style="font-weight:600;">Rp ${c.rate.toLocaleString('id-ID')}</td>
+                <td class="${textClass}" style="font-weight:700;">${sign}${c.change}%</td>
+                <td><span class="status-badge ${bgClass}">${statusText}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>
