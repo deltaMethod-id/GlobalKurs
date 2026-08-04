@@ -1,25 +1,9 @@
 {
   "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/analythics", "destination": "/analythics.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
-{
-  "rewrites": [
-    { "source": "/dashboard", "destination": "/dashboard.html" }
-  ]
-}
-{
-  "rewrites": [
-    { "source": "/analythics", "destination": "/analythics.html" }
-  ]
-}
-{
-  "rewrites": [
-    { "source": "/terms", "destination": "/terms.html" }
-  ]
-}
-{
-  "rewrites": [
-    { "source": "/privacy", "destination": "/privacy.html" }
   ]
 }
